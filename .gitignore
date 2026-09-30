@@ -13,3 +13,6 @@ dist/
 .env
 .env.*
 *.log
+
+# Admin portal runtime data (database, uploaded images, CVs)
+data/

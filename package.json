@@ -1,0 +1,15 @@
+{
+  "name": "ntalec-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NTALEC company website with admin portal (zero-dependency Node.js server + SQLite)",
+  "type": "module",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server/server.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch server/server.js",
+    "create-admin": "node --disable-warning=ExperimentalWarning server/create-admin.js"
+  }
+}

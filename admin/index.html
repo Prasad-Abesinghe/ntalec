@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>NTALEC Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/img/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: { 950: '#050816', 900: '#0a1022', 800: '#0f1830', 700: '#18233f' },
+            brand: { 300: '#67e8f9', 400: '#22d3ee', 500: '#06b6d4' },
+            accent: { 400: '#818cf8', 500: '#6366f1' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['"Space Grotesk"', 'Inter', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body class="bg-ink-950 font-sans text-slate-300 antialiased">
+  <div id="app" aria-live="polite">
+    <div class="grid min-h-screen place-items-center text-slate-500">Loading…</div>
+  </div>
+  <div id="toasts" class="pointer-events-none fixed bottom-4 right-4 z-[100] flex flex-col gap-2"></div>
+  <script type="module" src="/admin/admin.js"></script>
+</body>
+</html>

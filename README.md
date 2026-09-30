@@ -1,52 +1,97 @@
-# NTALEC — Company Website
+# NTALEC — Company Website & Admin Portal
 
-Static, responsive, SEO-ready site built with HTML5, Tailwind CSS and vanilla JavaScript.
+Responsive, SEO-ready company website (HTML5, Tailwind CSS, vanilla JavaScript) with a built-in admin portal.
+The server is plain Node.js with **no npm dependencies** — it uses Node's built-in HTTP server, SQLite (`node:sqlite`)
+and crypto modules.
 
 ## Structure
 
 ```
-index.html              Header, scroll story (hero → services → case studies → about → careers), contact, footer
-assets/css/styles.css   Custom styles (buttons, cards, scenes, form states, animations)
-assets/js/main.js       Mobile menu, sticky header, scroll reveal, scroll-driven videos, form validation/submit
+index.html              Website: header, scroll story (hero → services → case studies → about → careers), contact, footer
+assets/css/styles.css   Website styles (buttons, cards, scenes, forms, application dialog, animations)
+assets/js/main.js       Website behaviour: menu, scroll-driven videos, contact form, job application dialog
 assets/img/logo.svg     Logo mark + favicon
-assets/video/*.mp4      Hero video (scroll-driven) and one intro video per scene
+assets/video/*.mp4      Hero video (scroll-driven) and one intro video per section
 robots.txt, sitemap.xml SEO crawl files
+
+server/server.js        Web server: public site (rendered from the database), admin API, uploads
+server/db.js            SQLite schema + queries (database lives in data/)
+server/schema.js        Content model: collections, fields, icons, settings, validation
+server/render.js        Fills the <!--cms:…--> regions of index.html from the database
+server/auth.js          Password hashing (scrypt), sessions, rate limiting
+server/multipart.js     File-upload parsing + file-type detection
+server/seed.js          Initial content (mirrors the original static page)
+server/create-admin.js  CLI to create admin users
+
+admin/                  Admin portal (single-page app): index.html, admin.js, admin.css
+data/                   Created at runtime: ntalec.db, uploads/ (public images), cvs/ (private CVs) — not in git
 ```
 
 ## Run locally
 
-Open `index.html` directly, or serve the folder:
+Requires **Node.js 22.5 or newer** (tested on Node 24).
 
 ```
-npx serve .        # or: python -m http.server 8000
+npm run create-admin      # first time only: prompts for email, name and password
+npm start                 # http://localhost:3000   ·   admin: http://localhost:3000/admin/
 ```
+
+`npm run dev` restarts the server automatically when server files change.
+The first start creates `data/ntalec.db` and fills it with the site's current content.
+
+The site still works as plain static files (open `index.html` or use any static host) — it then shows the
+content written in `index.html` and the contact/application forms cannot submit.
+
+## Admin portal (`/admin/`)
+
+| Area | What admins can do |
+|---|---|
+| Dashboard | New messages / applications, open jobs, recent activity |
+| Messages | Contact-form inbox: search, filter (new / read / replied / archived), reply by email, archive, delete |
+| Applications | Job applications with CV download, status pipeline (new → reviewing → shortlisted → interview → hired / rejected), internal notes |
+| Services · Case Studies · Jobs | Add, edit, hide/show, reorder and delete; case studies can use an uploaded image; closing a job removes it from the site |
+| About Us | Stats, values and timeline |
+| Site settings | Contact email, phone, address, social links, SEO title/description, social-share text |
+| Account | Change password (signs out other devices) |
+
+Changes appear on the website on the next page load. Add more admins with `npm run create-admin`.
+
+**How the website uses it:** `index.html` marks the editable parts with `<!--cms:name-->…<!--/cms:name-->`.
+When the server sends the page it replaces those regions with database content (so search engines see it).
+The contact form posts to `/api/contact`; job "Apply" / "Send us your CV" buttons open a form that posts to
+`/api/apply` with the CV.
+
+**Security:** passwords are hashed with scrypt; sessions use random tokens in `HttpOnly`, `SameSite=Strict`
+cookies; admin changes also require an `X-Requested-With` header (CSRF protection); login, contact and
+application endpoints are rate-limited; uploads are checked by file contents (CVs: PDF/DOC/DOCX ≤ 5 MB,
+images: PNG/JPG/WebP ≤ 3 MB — no SVG); CVs are stored outside the public folder and only admins can download
+them; all content is HTML-escaped when rendered; only whitelisted paths are served.
+
+## Deploying
+
+Any host that runs a long-lived Node.js process with a **persistent disk** works (a VPS, Render, Railway, Fly.io…).
+The `data/` folder holds the database, uploaded images and CVs — it must survive restarts and redeploys.
+
+| Variable | Purpose |
+|---|---|
+| `PORT` / `HOST` | Listen address (default `3000` / `0.0.0.0`) |
+| `DATA_DIR` | Where the database, uploads and CVs are stored (default `./data`); point it at the persistent disk |
+| `NODE_ENV=production` | Marks the session cookie `Secure` (requires HTTPS) |
+| `TRUST_PROXY=1` | Behind a reverse proxy / platform load balancer: use `X-Forwarded-For` / `-Proto` |
+| `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME` | Optional: create the first admin on startup when none exists (useful on hosts without a shell) |
+
+Serve the site over HTTPS (platforms do this for you; on a VPS put Nginx or Caddy in front).
+**Back up `data/` regularly** — for example a nightly copy of the folder.
 
 ## Before going live — replace placeholders
 
 | What | Where |
 |---|---|
-| Email `hello@ntalec.com`, phone `+1 (555) 123-4567`, address `123 Innovation Drive, Tech City` | `index.html` (contact section, footer, JSON-LD) |
-| Social URLs (LinkedIn / X / GitHub / Facebook) | `index.html` contact section + JSON-LD `sameAs` |
-| Domain `https://www.ntalec.com` | canonical, Open Graph tags, JSON-LD, `robots.txt`, `sitemap.xml` |
+| Contact email, phone, address, social links, SEO text | Admin → **Site settings** |
+| Case studies, jobs, About Us stats / values / timeline | Admin → the matching section (current entries are **sample content**) |
+| Domain `https://www.ntalec.com` | canonical and Open Graph tags in `index.html`, `robots.txt`, `sitemap.xml`, `server/render.js` (JSON-LD) |
 | Social share image | add `assets/img/og-image.png` (1200×630) |
-| Case studies, client names and job openings | **Sample content** — swap in real projects and roles |
-| About Us: stats (150+ projects, 98% retention…), journey timeline years and milestones | **Sample content** — replace with your real figures and history |
-
-## Contact form (Formspree)
-
-1. Sign up at https://formspree.io and create a new form. Set the notification email to the inbox that should receive enquiries.
-2. Copy the form ID from the endpoint shown (`https://formspree.io/f/<ID>`).
-3. In `index.html`, replace `YOUR_FORM_ID` in the `action` of `<form id="contact-form">`.
-4. Send a test message from the live site. Formspree asks you to confirm the first submission by email.
-5. Recommended: in the Formspree form settings, restrict submissions to your domain.
-
-How it works:
-- With JavaScript, `main.js` validates fields, POSTs JSON to Formspree and shows an inline success/error message.
-- Without JavaScript, the form posts normally and Formspree shows its own thank-you page.
-- The `email` field becomes the reply-to, so you can answer enquiries directly from your inbox.
-- `_subject` makes notification emails read "NTALEC website enquiry: <subject>".
-- `_gotcha` is Formspree's honeypot field for filtering spam bots.
-- Until the ID is set, the form opens the visitor's email client pre-filled, addressed to `data-mailto`.
+| "Trusted by" client names, careers perks | `index.html` (sample content) |
 
 ## Production CSS (optional but recommended)
 

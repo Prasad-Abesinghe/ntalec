@@ -4,7 +4,8 @@
    - Scroll reveal
    - Scroll-driven story: hero video → section cards → each section's video plays with the
      scroll (Services, Case Studies, About Us, Careers), then its content
-   - Contact form validation + submission
+   - Contact form validation + submission (/api/contact)
+   - Job application dialog with CV upload (/api/apply)
    ========================================================================== */
 (() => {
   'use strict';
@@ -504,36 +505,129 @@
       if (form._gotcha.value) { form.reset(); showStatus('success', 'Thank you! Your message has been sent.'); return; }
 
       const data = Object.fromEntries(inputs.map((i) => [i.name, i.value.trim()]));
-      const endpoint = form.getAttribute('action') || '';
-
-      // Formspree ID not set yet: hand off to the visitor's email client
-      if (!endpoint || endpoint.includes('YOUR_FORM_ID')) {
-        const body = `Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`;
-        window.location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(body)}`;
-        showStatus('success', 'Opening your email app to send the message. If nothing happens, email us directly at ' + form.dataset.mailto + '.');
-        return;
-      }
+      const endpoint = form.getAttribute('action') || '/api/contact';
 
       setLoading(true);
       try {
-        // Formspree: `email` becomes the reply-to address, `_subject` sets the notification email's subject line
         const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ ...data, _subject: `NTALEC website enquiry: ${data.subject}` })
+          body: JSON.stringify(data)
         });
+        const body = await res.json().catch(() => ({}));
         if (!res.ok) {
-          const body = await res.json().catch(() => ({}));
-          const detail = Array.isArray(body.errors) ? body.errors.map((er) => er.message).join(' ') : '';
-          throw new Error(detail || `Request failed (${res.status})`);
+          // Show server-side field errors next to the fields
+          Object.entries(body.fields || {}).forEach(([name, msg]) => {
+            const input = form.elements[name];
+            if (!input) return;
+            input.closest('.field').classList.add('invalid');
+            $('.error', input.closest('.field')).textContent = msg;
+          });
+          throw new Error(body.error || `Request failed (${res.status})`);
         }
         form.reset();
         showStatus('success', `Thanks, ${data.name.split(' ')[0]}! Your message is on its way — we'll reply within one business day.`);
       } catch (err) {
         console.error(err);
-        showStatus('error', `Sorry, your message couldn't be sent${err.message ? ` (${err.message})` : ''}. Please try again or email us at ${form.dataset.mailto}.`);
+        const mailto = form.dataset.mailto;
+        showStatus('error', `Sorry, your message couldn't be sent${err.message ? ` (${err.message})` : ''}. Please try again or email us at ${mailto}.`);
       } finally {
         setLoading(false);
+      }
+    });
+  }
+
+  /* ---------- Job application dialog ----------
+     Any [data-apply] button (job "Apply" buttons, "Send us your CV") opens the dialog.
+     data-apply holds the job id ("" = general application). Submits multipart to /api/apply. */
+  const applyDialog = $('#apply-dialog');
+  if (applyDialog && typeof applyDialog.showModal === 'function') {
+    const applyForm = $('#apply-form');
+    const applyStatus = $('#apply-status');
+    const applyBtn = $('button[type="submit"]', applyForm);
+    const EMAIL_OK = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const CV_TYPES = /\.(pdf|docx?)$/i;
+
+    const setField = (input, msg) => {
+      const field = input.closest('.field');
+      field.classList.toggle('invalid', Boolean(msg));
+      $('.error', field).textContent = msg || '';
+    };
+    const checks = {
+      name: (v) => (v.trim().length < 2 ? 'Please enter your full name.' : ''),
+      email: (v) => (!EMAIL_OK.test(v.trim()) ? 'Please enter a valid email address.' : ''),
+      linkedin: (v) => (v.trim() && !/^https?:\/\/\S+$/i.test(v.trim()) ? 'Use a full link starting with https://' : ''),
+      cv: (v, input) => {
+        const file = input.files[0];
+        if (!file) return 'Please attach your CV.';
+        if (!CV_TYPES.test(file.name)) return 'CV must be a PDF, DOC or DOCX file.';
+        if (file.size > 5 * 1024 * 1024) return 'CV must be 5 MB or smaller.';
+        return '';
+      }
+    };
+    const validateApply = () => {
+      let first = null;
+      Object.entries(checks).forEach(([name, check]) => {
+        const input = applyForm.elements[name];
+        const msg = check(input.value, input);
+        setField(input, msg);
+        if (msg && !first) first = input;
+      });
+      if (first) first.focus();
+      return !first;
+    };
+    const showApplyStatus = (type, msg) => {
+      applyStatus.className = `mt-5 rounded-xl px-4 py-3 text-sm ${type}`;
+      applyStatus.textContent = msg;
+    };
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-apply]');
+      if (!trigger) return;
+      e.preventDefault();
+      applyForm.reset();
+      $$('.field', applyForm).forEach((f) => { f.classList.remove('invalid'); $('.error', f).textContent = ''; });
+      applyStatus.className = 'mt-5 hidden rounded-xl px-4 py-3 text-sm';
+      applyBtn.disabled = false;
+      applyBtn.hidden = false;
+      $('#apply-job-id').value = trigger.dataset.apply || '';
+      $('#apply-job-title').textContent = trigger.dataset.jobTitle || 'General application';
+      const desc = $('#apply-job-description');
+      desc.textContent = trigger.dataset.jobDescription || '';
+      desc.classList.toggle('hidden', !desc.textContent);
+      applyDialog.showModal();
+      $('#apply-name').focus();
+    });
+    $('[data-close]', applyDialog).addEventListener('click', () => applyDialog.close());
+    applyDialog.addEventListener('click', (e) => { if (e.target === applyDialog) applyDialog.close(); }); // backdrop
+    Object.keys(checks).forEach((name) => {
+      const input = applyForm.elements[name];
+      input.addEventListener(name === 'cv' ? 'change' : 'blur', () => setField(input, checks[name](input.value, input)));
+    });
+
+    applyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validateApply()) { showApplyStatus('error', 'Please fix the highlighted fields.'); return; }
+      applyBtn.disabled = true;
+      $('.spinner', applyBtn).classList.remove('hidden');
+      $('.btn-label', applyBtn).textContent = 'Sending…';
+      try {
+        const res = await fetch('/api/apply', { method: 'POST', body: new FormData(applyForm), headers: { Accept: 'application/json' } });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          Object.entries(body.fields || {}).forEach(([name, msg]) => { if (applyForm.elements[name]) setField(applyForm.elements[name], msg); });
+          throw new Error(body.error || `Request failed (${res.status})`);
+        }
+        showApplyStatus('success', 'Thank you! Your application has been received — our team will be in touch soon.');
+        applyBtn.hidden = true;
+      } catch (err) {
+        console.error(err);
+        const mailto = ($('#contact-form') || {}).dataset?.mailto || 'us';
+        showApplyStatus('error', `Sorry, we couldn't submit your application (${err.message}). Please try again or email your CV to ${mailto}.`);
+        applyBtn.disabled = false;
+      } finally {
+        $('.spinner', applyBtn).classList.add('hidden');
+        $('.btn-label', applyBtn).textContent = 'Submit application';
       }
     });
   }

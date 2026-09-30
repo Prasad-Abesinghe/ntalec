@@ -624,3 +624,48 @@ html:not(.js) .scene-bg { display: none; }
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
+
+/* ---------- Job application dialog ---------- */
+.apply-dialog {
+  width: min(40rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  padding: 0;
+  border: 0;
+  border-radius: 1.25rem;
+  background: transparent;
+  color: inherit;
+}
+.apply-dialog::backdrop { background: rgba(2, 4, 12, 0.75); backdrop-filter: blur(6px); }
+.apply-dialog[open] { animation: dialog-in 0.25s ease; }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(16px) scale(0.98); } }
+.apply-card {
+  padding: 1.75rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--ink-900);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8);
+}
+@media (min-width: 640px) { .apply-card { padding: 2.25rem; } }
+.apply-close {
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 9999px;
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.apply-close:hover { color: #fff; border-color: var(--brand-400); }
+.file-input { padding: 0.6rem !important; cursor: pointer; }
+.file-input::file-selector-button {
+  margin-right: 0.9rem;
+  padding: 0.45rem 0.9rem;
+  border: 0;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  color: var(--ink-950);
+  background: var(--brand-400);
+  cursor: pointer;
+}
+#apply-status.success { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); color: #6ee7b7; }
+#apply-status.error { background: rgba(248, 113, 113, 0.1); border: 1px solid rgba(248, 113, 113, 0.35); color: #fca5a5; }
+button.job-apply { cursor: pointer; background: transparent; }
