@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- ================= SEO ================= -->
+  <title>NTALEC | Custom Software Development, Cloud & AI Solutions</title>
+  <meta name="description" content="NTALEC builds custom software, mobile apps, cloud platforms and AI solutions that help businesses scale. Agile delivery, expert engineers and 24/7 support." />
+  <meta name="keywords" content="custom software development, mobile app development, cloud computing, DevOps, UI/UX design, AI, machine learning, digital transformation, NTALEC" />
+  <meta name="author" content="NTALEC" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#050816" />
+  <script>document.documentElement.classList.add('js');</script>
+  <!-- TODO: replace with your production domain -->
+  <link rel="canonical" href="https://www.ntalec.com/" />
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="NTALEC" />
+  <meta property="og:title" content="NTALEC | Software That Moves Your Business Forward" />
+  <meta property="og:description" content="Custom software, mobile, cloud and AI solutions engineered for growth." />
+  <meta property="og:url" content="https://www.ntalec.com/" />
+  <meta property="og:image" content="https://www.ntalec.com/assets/img/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NTALEC | Software That Moves Your Business Forward" />
+  <meta name="twitter:description" content="Custom software, mobile, cloud and AI solutions engineered for growth." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "NTALEC",
+    "url": "https://www.ntalec.com",
+    "logo": "https://www.ntalec.com/assets/img/logo.svg",
+    "email": "hello@ntalec.com",
+    "telephone": "+1-555-123-4567",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Innovation Drive",
+      "addressLocality": "Tech City"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/ntalec",
+      "https://twitter.com/ntalec",
+      "https://github.com/ntalec"
+    ]
+  }
+  </script>
+
+  <!-- ================= Fonts ================= -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- ================= Tailwind ================= -->
+  <!-- Tailwind Play CDN: zero-build setup. For production, see README.md to compile a purged CSS file. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: { 950: '#050816', 900: '#0a1022', 800: '#0f1830', 700: '#18233f' },
+            brand: { 300: '#67e8f9', 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2' },
+            accent: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'sans-serif']
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(34,211,238,.15), 0 20px 60px -20px rgba(34,211,238,.35)'
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body class="bg-ink-950 text-slate-300 font-sans antialiased selection:bg-brand-400/30 selection:text-white">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-lg focus:bg-brand-400 focus:px-4 focus:py-2 focus:text-ink-950">Skip to content</a>
+
+  <!-- =====================================================================
+       1. HEADER & NAVIGATION
+  ====================================================================== -->
+  <header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8" aria-label="Primary">
+      <a href="#home" class="flex items-center gap-2.5" aria-label="NTALEC home">
+        <img src="assets/img/logo.svg" alt="" width="36" height="36" class="h-9 w-9" />
+        <span class="font-display text-xl font-bold tracking-wide text-white">NTALEC</span>
+      </a>
+
+      <ul class="hidden items-center gap-1 lg:flex">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#portfolio" class="nav-link">Case Studies</a></li>
+        <li><a href="#about" class="nav-link">About Us</a></li>
+        <li><a href="#careers" class="nav-link">Careers</a></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="btn-primary hidden sm:inline-flex">Get a Quote</a>
+        <button id="menu-toggle" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white lg:hidden" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+          <svg class="icon-open h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="icon-close hidden h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden border-t border-white/10 bg-ink-950/95 backdrop-blur-xl lg:hidden">
+      <ul class="space-y-1 px-4 py-4">
+        <li><a href="#home" class="mobile-link">Home</a></li>
+        <li><a href="#services" class="mobile-link">Services</a></li>
+        <li><a href="#portfolio" class="mobile-link">Case Studies</a></li>
+        <li><a href="#about" class="mobile-link">About Us</a></li>
+        <li><a href="#careers" class="mobile-link">Careers</a></li>
+        <li class="pt-2"><a href="#contact" class="btn-primary w-full justify-center">Get a Quote</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- =====================================================================
+         2. HERO
+    ====================================================================== -->
+    <section id="home" class="scroll-hero relative">
+      <!--
+        Scroll-driven hero: the section is several screens tall and the inner stage is pinned (sticky).
+        main.js plays the video once in the background, caches each frame as an image, and paints the
+        frame matching the scroll position onto the canvas. This keeps scrubbing smooth in both
+        directions even though the source clip has a single keyframe (which makes direct seeking slow).
+      -->
+      <div class="hero-stage sticky top-0 isolate flex h-screen items-center overflow-hidden">
+        <video id="hero-video" class="absolute inset-0 -z-30 h-full w-full object-cover" muted playsinline preload="auto" aria-hidden="true"
+               data-src="assets/video/Camera_moving_into_futuristic_bu%E2%80%A6_20260930104306.mp4" data-fps="24">
+        </video>
+        <canvas id="hero-canvas" class="absolute inset-0 -z-20 h-full w-full" aria-hidden="true"></canvas>
+        <!-- Light top fade so the header stays readable; the shade fades in only behind the nav tiles -->
+        <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-ink-950/70 to-transparent"></div>
+        <div class="hero-shade pointer-events-none absolute inset-0 -z-10 bg-ink-950 opacity-0"></div>
+
+        <h1 class="sr-only">NTALEC — custom software development, mobile apps, cloud and AI solutions</h1>
+
+        <!-- Stage 2: shown when the camera arrives inside the building -->
+        <nav id="hero-nav" class="absolute inset-0 flex items-center" aria-label="Explore NTALEC">
+          <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="hero-heading">
+              <p class="eyebrow text-center">Welcome inside</p>
+              <h2 class="section-title text-center">Where would you like to go?</h2>
+            </div>
+            <div class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+              <a href="#services" class="hero-tile">
+                <span class="hero-tile-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></span>
+                <span class="hero-tile-title">Services</span>
+                <span class="hero-tile-text">Software, mobile, cloud, design &amp; AI</span>
+                <span class="hero-tile-arrow" aria-hidden="true">→</span>
+              </a>
+              <a href="#portfolio" class="hero-tile">
+                <span class="hero-tile-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="m7 14 3-3 3 2 4-4"/></svg></span>
+                <span class="hero-tile-title">Case Studies</span>
+                <span class="hero-tile-text">Results we've delivered</span>
+                <span class="hero-tile-arrow" aria-hidden="true">→</span>
+              </a>
+              <a href="#about" class="hero-tile">
+                <span class="hero-tile-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg></span>
+                <span class="hero-tile-title">About Us</span>
+                <span class="hero-tile-text">Who we are &amp; how we work</span>
+                <span class="hero-tile-arrow" aria-hidden="true">→</span>
+              </a>
+              <a href="#careers" class="hero-tile">
+                <span class="hero-tile-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
+                <span class="hero-tile-title">Careers</span>
+                <span class="hero-tile-text">Join our team</span>
+                <span class="hero-tile-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Scroll hint + progress -->
+        <div id="scroll-hint" class="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
+          <span class="scroll-mouse"><span></span></span>
+          Scroll to explore
+        </div>
+        <div class="absolute inset-x-0 bottom-0 h-0.5 bg-white/5"><div id="hero-progress" class="h-full origin-left scale-x-0 bg-gradient-to-r from-brand-400 to-accent-500"></div></div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================================
+         3. SERVICES — scroll scene
+         Card enlarges → video plays with the scroll → content scrolls up over the last frame.
+    ====================================================================== -->
+    <section id="services" class="scene" aria-labelledby="services-title" data-video="assets/video/Camera_moving_into_conference_room_20260930113611.mp4">
+      <div class="scene-bg" aria-hidden="true">
+        <div class="scene-stage">
+          <canvas class="scene-canvas"></canvas>
+          <div class="scene-shade"></div>
+          <div class="scene-cover"></div>
+          <div class="chapter-card hero-tile">
+            <span class="hero-tile-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></span>
+            <span class="hero-tile-title">Services</span>
+            <span class="hero-tile-text">Software, mobile, cloud, design &amp; AI</span>
+            <span class="hero-tile-arrow">→</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-spacer" aria-hidden="true"></div>
+
+      <div class="scene-content relative w-full pb-[80vh] pt-24">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-3xl text-center">
+            <p class="eyebrow">What we do</p>
+            <h2 id="services-title" class="section-title">End-to-end software services</h2>
+            <p class="mt-4 text-lg text-slate-300">One partner from first sketch to production scale. We design, build, deploy and evolve the technology your business runs on — with senior teams, transparent delivery and measurable outcomes.</p>
+          </div>
+
+          <!-- Core services -->
+          <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <article class="service-card">
+              <div class="icon-tile"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></div>
+              <h3>Custom Software Development</h3>
+              <p>Bespoke web platforms, SaaS products and enterprise systems engineered around your workflows — not the other way around.</p>
+              <ul class="check-list"><li>Architecture &amp; technical discovery</li><li>Web apps, portals &amp; SaaS platforms</li><li>ERP / CRM and legacy modernisation</li><li>Secure APIs &amp; third-party integrations</li></ul>
+              <ul class="tag-list"><li>React</li><li>Next.js</li><li>Node.js</li><li>.NET</li></ul>
+            </article>
+
+            <article class="service-card">
+              <div class="icon-tile"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path stroke-linecap="round" d="M11 18.5h2"/></svg></div>
+              <h3>Mobile App Development</h3>
+              <p>Native and cross-platform apps for iOS and Android with smooth UX, offline support and app-store-ready polish.</p>
+              <ul class="check-list"><li>iOS &amp; Android from one codebase</li><li>Offline sync, push &amp; in-app payments</li><li>Wearables &amp; IoT companion apps</li><li>App Store &amp; Play Store launch</li></ul>
+              <ul class="tag-list"><li>Flutter</li><li>React Native</li><li>Swift</li><li>Kotlin</li></ul>
+            </article>
+
+            <article class="service-card">
+              <div class="icon-tile"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 18a4.5 4.5 0 0 1-.6-8.96 6 6 0 0 1 11.52 1.46A3.75 3.75 0 0 1 17.25 18H7Z"/></svg></div>
+              <h3>Cloud Computing &amp; DevOps</h3>
+              <p>Cloud-native architecture, migrations, CI/CD pipelines and infrastructure-as-code that keep you fast, secure and cost-efficient.</p>
+              <ul class="check-list"><li>Cloud migration &amp; modernisation</li><li>CI/CD pipelines &amp; release automation</li><li>Kubernetes &amp; serverless platforms</li><li>Monitoring, security &amp; cost optimisation</li></ul>
+              <ul class="tag-list"><li>AWS</li><li>Azure</li><li>Kubernetes</li><li>Terraform</li></ul>
+            </article>
+
+            <article class="service-card">
+              <div class="icon-tile"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3a9 9 0 1 0 0 18c1.1 0 1.5-.8 1.5-1.5 0-.9-.6-1.3-.6-2.2 0-.8.7-1.3 1.5-1.3H16a5 5 0 0 0 5-5c0-4.4-4-8-9-8Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7.5" r="1"/><circle cx="15" cy="8" r="1"/></svg></div>
+              <h3>UI/UX Design &amp; Branding</h3>
+              <p>Research-driven product design, design systems and brand identities that make your product intuitive and unmistakably yours.</p>
+              <ul class="check-list"><li>User research &amp; usability testing</li><li>Wireframes &amp; interactive prototypes</li><li>Design systems &amp; component libraries</li><li>Logo, identity &amp; brand guidelines</li></ul>
+              <ul class="tag-list"><li>Figma</li><li>Design Systems</li><li>Prototyping</li><li>Branding</li></ul>
+            </article>
+
+            <article class="service-card">
+              <div class="icon-tile"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path stroke-linecap="round" d="M9 2v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3"/></svg></div>
+              <h3>AI &amp; Machine Learning</h3>
+              <p>Intelligent features that pay for themselves — LLM assistants, predictive analytics, computer vision and workflow automation.</p>
+              <ul class="check-list"><li>LLM assistants, chatbots &amp; RAG search</li><li>Predictive models &amp; forecasting</li><li>Computer vision &amp; document processing</li><li>MLOps: deploy, monitor, retrain</li></ul>
+              <ul class="tag-list"><li>Python</li><li>PyTorch</li><li>LLMs</li><li>MLOps</li></ul>
+            </article>
+
+            <article class="service-card">
+              <div class="icon-tile"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path stroke-linecap="round" d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6"/></svg></div>
+              <h3>Data Engineering &amp; Analytics</h3>
+              <p>Turn scattered data into decisions with reliable pipelines, modern warehouses and dashboards your teams actually use.</p>
+              <ul class="check-list"><li>ETL / ELT pipelines &amp; data lakes</li><li>Data warehouses &amp; modelling</li><li>BI dashboards &amp; self-serve reporting</li><li>Data quality &amp; governance</li></ul>
+              <ul class="tag-list"><li>Snowflake</li><li>BigQuery</li><li>dbt</li><li>Power BI</li></ul>
+            </article>
+
+            <article class="service-card">
+              <div class="icon-tile"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3 4.5 6v5.5c0 4.6 3.2 8.3 7.5 9.5 4.3-1.2 7.5-4.9 7.5-9.5V6L12 3Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m8.5 12 2.5 2.5 4.5-5"/></svg></div>
+              <h3>Quality Assurance &amp; Testing</h3>
+              <p>Ship with confidence. Automated and manual testing that catches issues early and keeps every release stable.</p>
+              <ul class="check-list"><li>Test strategy &amp; automation frameworks</li><li>Performance &amp; load testing</li><li>Security &amp; penetration testing</li><li>Accessibility (WCAG) audits</li></ul>
+              <ul class="tag-list"><li>Playwright</li><li>Cypress</li><li>k6</li><li>OWASP</li></ul>
+            </article>
+
+            <article class="service-card">
+              <div class="icon-tile"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 14v-2a9 9 0 0 1 18 0v2M3 14a2 2 0 0 1 2-2h1v6H5a2 2 0 0 1-2-2v-2Zm18 0a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2v-2ZM18 18a4 4 0 0 1-4 3h-2"/></svg></div>
+              <h3>Maintenance &amp; 24/7 Support</h3>
+              <p>Keep critical systems healthy long after launch with proactive monitoring, SLAs and continuous improvement.</p>
+              <ul class="check-list"><li>24/7 monitoring &amp; incident response</li><li>SLA-backed bug fixing</li><li>Security patches &amp; upgrades</li><li>Performance tuning &amp; new features</li></ul>
+              <ul class="tag-list"><li>SLA</li><li>On-call</li><li>Observability</li><li>SRE</li></ul>
+            </article>
+
+            <!-- CTA card -->
+            <article class="service-card service-card--cta flex flex-col justify-between">
+              <div>
+                <h3 class="!mt-0">Have something else in mind?</h3>
+                <p>Tell us about your challenge. We'll put together a free technical assessment and project roadmap within a week.</p>
+              </div>
+              <a href="#contact" class="btn-primary mt-8 self-start">Talk to an expert</a>
+            </article>
+          </div>
+
+          <!-- Engagement models -->
+          <div class="mt-24">
+            <div class="mx-auto max-w-2xl text-center">
+              <p class="eyebrow">How we engage</p>
+              <h3 class="sub-title">Flexible engagement models</h3>
+              <p class="mt-3 text-slate-300">Pick the model that fits your stage, budget and in-house capability — and switch as you grow.</p>
+            </div>
+            <div class="mt-10 grid gap-6 md:grid-cols-3">
+              <div class="model-card">
+                <span class="model-num">01</span>
+                <h4>Dedicated Team</h4>
+                <p>A cross-functional squad (engineers, QA, designer, PM) working as an extension of your company.</p>
+                <p class="model-best"><strong>Best for:</strong> long-term products and evolving roadmaps.</p>
+              </div>
+              <div class="model-card">
+                <span class="model-num">02</span>
+                <h4>Fixed-Scope Project</h4>
+                <p>Clear scope, milestones and a fixed price — ideal when requirements are well defined.</p>
+                <p class="model-best"><strong>Best for:</strong> MVPs, migrations and well-scoped builds.</p>
+              </div>
+              <div class="model-card">
+                <span class="model-num">03</span>
+                <h4>Team Augmentation</h4>
+                <p>Add senior specialists to your existing team within days to close skill gaps or hit deadlines.</p>
+                <p class="model-best"><strong>Best for:</strong> scaling capacity fast.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tech stack -->
+          <div class="mt-24">
+            <div class="mx-auto max-w-2xl text-center">
+              <p class="eyebrow">Our toolbox</p>
+              <h3 class="sub-title">Technologies we work with</h3>
+            </div>
+            <div class="stack-grid mt-10">
+              <div class="stack-row"><span class="stack-label">Frontend</span><ul class="tag-list"><li>React</li><li>Next.js</li><li>Vue</li><li>Angular</li><li>TypeScript</li><li>Tailwind CSS</li></ul></div>
+              <div class="stack-row"><span class="stack-label">Backend</span><ul class="tag-list"><li>Node.js</li><li>Python</li><li>Java / Spring</li><li>.NET</li><li>Go</li><li>GraphQL</li></ul></div>
+              <div class="stack-row"><span class="stack-label">Mobile</span><ul class="tag-list"><li>Flutter</li><li>React Native</li><li>Swift</li><li>Kotlin</li></ul></div>
+              <div class="stack-row"><span class="stack-label">Cloud &amp; DevOps</span><ul class="tag-list"><li>AWS</li><li>Azure</li><li>Google Cloud</li><li>Docker</li><li>Kubernetes</li><li>Terraform</li><li>GitHub Actions</li></ul></div>
+              <div class="stack-row"><span class="stack-label">Data &amp; AI</span><ul class="tag-list"><li>PostgreSQL</li><li>MongoDB</li><li>Redis</li><li>Snowflake</li><li>PyTorch</li><li>OpenAI / LLMs</li></ul></div>
+            </div>
+          </div>
+
+          <!-- Industries -->
+          <div class="mt-24">
+            <div class="mx-auto max-w-2xl text-center">
+              <p class="eyebrow">Industries</p>
+              <h3 class="sub-title">Domain expertise across sectors</h3>
+            </div>
+            <ul class="industry-grid mt-10">
+              <li>FinTech &amp; Banking</li>
+              <li>Healthcare &amp; HealthTech</li>
+              <li>E-commerce &amp; Retail</li>
+              <li>Logistics &amp; Supply Chain</li>
+              <li>Education &amp; EdTech</li>
+              <li>Real Estate &amp; PropTech</li>
+              <li>Manufacturing &amp; IoT</li>
+              <li>Media &amp; Entertainment</li>
+            </ul>
+          </div>
+
+          <!-- CTA banner -->
+          <div class="cta-banner mt-24">
+            <div>
+              <h3 class="sub-title !mt-0">Ready to build something great?</h3>
+              <p class="mt-2 text-slate-300">Get a free consultation and a detailed estimate for your project.</p>
+            </div>
+            <a href="#contact" class="btn-primary btn-lg">Get a free estimate</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         4. CASE STUDIES — scroll scene
+         Card enlarges → video plays with the scroll → content scrolls up over the last frame.
+    ====================================================================== -->
+    <section id="portfolio" class="scene" aria-labelledby="portfolio-title" data-video="assets/video/Camera_entering_futuristic_lab_1080p_20260930115406.mp4">
+      <div class="scene-bg" aria-hidden="true">
+        <div class="scene-stage">
+          <canvas class="scene-canvas"></canvas>
+          <div class="scene-shade"></div>
+          <div class="scene-cover"></div>
+          <div class="chapter-card hero-tile">
+            <span class="hero-tile-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="m7 14 3-3 3 2 4-4"/></svg></span>
+            <span class="hero-tile-title">Case Studies</span>
+            <span class="hero-tile-text">Results we've delivered</span>
+            <span class="hero-tile-arrow">→</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-spacer" aria-hidden="true"></div>
+
+      <div class="scene-content relative w-full pb-[80vh] pt-24">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div class="max-w-2xl">
+              <p class="eyebrow">Case studies</p>
+              <h2 id="portfolio-title" class="section-title">Results we're proud of</h2>
+              <p class="mt-4 text-lg text-slate-400">A selection of recent engagements across industries.</p>
+            </div>
+            <a href="#contact" class="link-arrow">Start your project <span aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Project 1 -->
+            <article class="project-card">
+              <div class="project-visual bg-gradient-to-br from-cyan-500/30 via-sky-600/20 to-indigo-700/30">
+                <svg viewBox="0 0 320 180" class="h-full w-full" aria-hidden="true">
+                  <rect x="30" y="24" width="260" height="132" rx="10" fill="#0a1022" stroke="rgba(255,255,255,.12)"/>
+                  <rect x="44" y="40" width="70" height="8" rx="4" fill="#22d3ee" opacity=".8"/>
+                  <rect x="44" y="60" width="110" height="40" rx="6" fill="rgba(255,255,255,.06)"/>
+                  <rect x="164" y="60" width="112" height="40" rx="6" fill="rgba(255,255,255,.06)"/>
+                  <polyline points="44,140 80,122 116,128 152,110 188,114 224,94 276,100" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <text x="54" y="86" fill="#fff" font-family="Inter" font-size="14" font-weight="700">$2.4M</text>
+                  <text x="174" y="86" fill="#818cf8" font-family="Inter" font-size="14" font-weight="700">+38%</text>
+                </svg>
+              </div>
+              <div class="p-7">
+                <p class="text-xs font-semibold uppercase tracking-widest text-brand-400">FinTech · Web Platform</p>
+                <h3 class="mt-2 font-display text-xl font-semibold text-white">Aurora Pay — Real-time Payments Dashboard</h3>
+                <p class="mt-3 text-slate-400">Rebuilt a legacy merchant portal into a real-time analytics platform processing 2M+ transactions a day, cutting reporting time by 70%.</p>
+                <ul class="tag-list mt-5"><li>React</li><li>Node.js</li><li>PostgreSQL</li><li>AWS</li></ul>
+                <a href="#contact" class="link-arrow mt-6">View Case Study <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+
+            <!-- Project 2 -->
+            <article class="project-card">
+              <div class="project-visual bg-gradient-to-br from-emerald-500/25 via-teal-600/20 to-cyan-700/30">
+                <svg viewBox="0 0 320 180" class="h-full w-full" aria-hidden="true">
+                  <rect x="118" y="14" width="84" height="156" rx="14" fill="#0a1022" stroke="rgba(255,255,255,.15)"/>
+                  <rect x="130" y="34" width="60" height="8" rx="4" fill="#34d399"/>
+                  <circle cx="160" cy="82" r="24" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="6"/>
+                  <circle cx="160" cy="82" r="24" fill="none" stroke="#34d399" stroke-width="6" stroke-dasharray="110 151" stroke-linecap="round" transform="rotate(-90 160 82)"/>
+                  <rect x="130" y="118" width="60" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+                  <rect x="130" y="134" width="44" height="10" rx="5" fill="rgba(255,255,255,.08)"/>
+                  <rect x="40" y="60" width="60" height="44" rx="8" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.08)"/>
+                  <rect x="220" y="76" width="60" height="44" rx="8" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.08)"/>
+                </svg>
+              </div>
+              <div class="p-7">
+                <p class="text-xs font-semibold uppercase tracking-widest text-emerald-400">HealthTech · Mobile</p>
+                <h3 class="mt-2 font-display text-xl font-semibold text-white">Helix Health — Patient Care App</h3>
+                <p class="mt-3 text-slate-400">A HIPAA-compliant iOS &amp; Android app for remote monitoring and teleconsultations, now used by 120,000+ patients with a 4.8★ rating.</p>
+                <ul class="tag-list mt-5"><li>Flutter</li><li>Firebase</li><li>FHIR</li><li>Azure</li></ul>
+                <a href="#contact" class="link-arrow mt-6">View Case Study <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+
+            <!-- Project 3 -->
+            <article class="project-card md:col-span-2 lg:col-span-1">
+              <div class="project-visual bg-gradient-to-br from-violet-500/30 via-indigo-600/20 to-fuchsia-700/25">
+                <svg viewBox="0 0 320 180" class="h-full w-full" aria-hidden="true">
+                  <g stroke="rgba(129,140,248,.5)" stroke-width="1.5">
+                    <line x1="70" y1="50" x2="160" y2="90"/><line x1="70" y1="130" x2="160" y2="90"/>
+                    <line x1="160" y1="90" x2="250" y2="45"/><line x1="160" y1="90" x2="250" y2="90"/><line x1="160" y1="90" x2="250" y2="135"/>
+                    <line x1="70" y1="50" x2="70" y2="130"/>
+                  </g>
+                  <circle cx="70" cy="50" r="10" fill="#818cf8"/><circle cx="70" cy="130" r="10" fill="#818cf8"/>
+                  <circle cx="160" cy="90" r="18" fill="#6366f1" stroke="#c7d2fe" stroke-width="2"/>
+                  <circle cx="250" cy="45" r="9" fill="#22d3ee"/><circle cx="250" cy="90" r="9" fill="#22d3ee"/><circle cx="250" cy="135" r="9" fill="#22d3ee"/>
+                </svg>
+              </div>
+              <div class="p-7">
+                <p class="text-xs font-semibold uppercase tracking-widest text-accent-400">Logistics · AI &amp; Cloud</p>
+                <h3 class="mt-2 font-display text-xl font-semibold text-white">Vertex Logistics — AI Route Optimizer</h3>
+                <p class="mt-3 text-slate-400">A machine-learning engine that plans delivery routes for 3,000+ vehicles, reducing fuel costs by 22% and late deliveries by 35%.</p>
+                <ul class="tag-list mt-5"><li>Python</li><li>TensorFlow</li><li>Kubernetes</li><li>GCP</li></ul>
+                <a href="#contact" class="link-arrow mt-6">View Case Study <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         5. ABOUT US — scroll scene
+         Card enlarges → video plays with the scroll → content scrolls up over the last frame.
+    ====================================================================== -->
+    <section id="about" class="scene" aria-labelledby="about-title" data-video="assets/video/Walking_through_corporate_office%E2%80%A6_1080p_20260930114350.mp4">
+      <div class="scene-bg" aria-hidden="true">
+        <div class="scene-stage">
+          <canvas class="scene-canvas"></canvas>
+          <div class="scene-shade"></div>
+          <div class="scene-cover"></div>
+          <div class="chapter-card hero-tile">
+            <span class="hero-tile-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg></span>
+            <span class="hero-tile-title">About Us</span>
+            <span class="hero-tile-text">Who we are &amp; how we work</span>
+            <span class="hero-tile-arrow">→</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-spacer" aria-hidden="true"></div>
+
+      <div class="scene-content relative w-full pb-[80vh] pt-24">
+        <div class="mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-5 lg:px-8">
+          <div class="lg:col-span-2">
+            <p class="eyebrow">Why NTALEC</p>
+            <h2 id="about-title" class="section-title">A technology partner you can build a business on</h2>
+            <p class="mt-6 text-lg leading-relaxed text-slate-400">
+              NTALEC is a software engineering company helping startups and enterprises design, build and scale digital products. We combine senior engineering talent with a transparent, outcome-driven process — so you always know what's being built, why, and when it ships.
+            </p>
+            <div class="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+              <p class="font-display text-lg text-white">"We measure success by one thing: whether the software we ship makes our clients measurably better at what they do."</p>
+              <p class="mt-4 text-sm text-slate-400">— NTALEC Leadership Team</p>
+            </div>
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2 lg:col-span-3">
+            <div class="feature">
+              <div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1m18 0v-1a4 4 0 0 0-3-3.87M14 4.13a4 4 0 0 1 0 7.75M14 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg></div>
+              <h3>Expert Team</h3>
+              <p>Senior engineers, architects and designers with deep experience across fintech, healthcare, retail and logistics.</p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M5.5 15a7 7 0 0 0 12.9 1.5M18.5 9A7 7 0 0 0 5.6 7.5"/></svg></div>
+              <h3>Agile Methodology</h3>
+              <p>Two-week sprints, live demos and a shared backlog. You see working software early and steer priorities as you learn.</p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 14v-2a9 9 0 0 1 18 0v2M3 14a2 2 0 0 1 2-2h1v6H5a2 2 0 0 1-2-2v-2Zm18 0a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2v-2ZM18 18a4 4 0 0 1-4 3h-2"/></svg></div>
+              <h3>24/7 Support</h3>
+              <p>Round-the-clock monitoring, incident response and SLA-backed maintenance keep your systems healthy after launch.</p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m4.5-14.25H10a2.75 2.75 0 0 0 0 5.5h4a2.75 2.75 0 0 1 0 5.5H7"/></svg></div>
+              <h3>Cost-Effective Solutions</h3>
+              <p>Transparent pricing, right-sized teams and reusable accelerators deliver enterprise quality without enterprise overhead.</p>
+            </div>
+            <div class="feature sm:col-span-2">
+              <div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2"/></svg></div>
+              <h3>On-Time Delivery</h3>
+              <p>Clear milestones, risk tracking from day one and a delivery track record our clients rely on. When we commit to a date, we hit it.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Process -->
+        <div class="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h3 class="text-center font-display text-2xl font-semibold text-white">How we work</h3>
+          <ol class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <li class="step"><span class="step-num">01</span><h4>Discover</h4><p>Workshops to map goals, users and technical constraints.</p></li>
+            <li class="step"><span class="step-num">02</span><h4>Design</h4><p>Architecture, UX flows and clickable prototypes you can test.</p></li>
+            <li class="step"><span class="step-num">03</span><h4>Build</h4><p>Agile sprints with CI/CD, code review and automated testing.</p></li>
+            <li class="step"><span class="step-num">04</span><h4>Launch &amp; Scale</h4><p>Smooth go-live, monitoring and continuous improvement.</p></li>
+          </ol>
+        </div>
+        <!-- Mission & vision -->
+        <div class="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid gap-6 md:grid-cols-2">
+            <div class="model-card">
+              <p class="eyebrow">Our mission</p>
+              <h4 class="!mt-3 !text-2xl">Make great software accessible to every ambitious business</h4>
+              <p>We give startups and enterprises alike the same senior engineering, thoughtful design and dependable delivery — so technology becomes a growth engine, not a bottleneck.</p>
+            </div>
+            <div class="model-card">
+              <p class="eyebrow">Our vision</p>
+              <h4 class="!mt-3 !text-2xl">Be the most trusted technology partner for companies that want to lead</h4>
+              <p>A world where every organisation can turn ideas into reliable, intelligent products quickly — and where partnerships are measured in years, not projects.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- By the numbers (sample figures — replace with your own) -->
+        <div class="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-2xl text-center">
+            <p class="eyebrow">By the numbers</p>
+            <h3 class="sub-title">Results that speak for themselves</h3>
+          </div>
+          <dl class="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
+            <div class="about-stat"><dt>Projects delivered</dt><dd>150+</dd></div>
+            <div class="about-stat"><dt>Client retention</dt><dd>98%</dd></div>
+            <div class="about-stat"><dt>Engineers &amp; designers</dt><dd>60+</dd></div>
+            <div class="about-stat"><dt>Countries served</dt><dd>12</dd></div>
+          </dl>
+        </div>
+
+        <!-- Core values -->
+        <div class="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-2xl text-center">
+            <p class="eyebrow">What drives us</p>
+            <h3 class="sub-title">Our core values</h3>
+            <p class="mt-3 text-slate-300">The principles behind every decision we make — with clients and with each other.</p>
+          </div>
+          <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="feature">
+              <div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3 4.5 6v5.5c0 4.6 3.2 8.3 7.5 9.5 4.3-1.2 7.5-4.9 7.5-9.5V6L12 3Z"/></svg></div>
+              <h3>Integrity</h3>
+              <p>Honest estimates, open communication and no surprises. We say what we'll do — then do it.</p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m12 3 2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8-4.2-4.1 5.9-.9L12 3Z"/></svg></div>
+              <h3>Craftsmanship</h3>
+              <p>Clean code, thoughtful design and rigorous testing. We build software we're proud to put our name on.</p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1m18 0v-1a4 4 0 0 0-3-3.87M14 4.13a4 4 0 0 1 0 7.75M14 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg></div>
+              <h3>Partnership</h3>
+              <p>Your goals are our goals. We act like owners, challenge ideas respectfully and share accountability.</p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.9V16h5v-.2c0-.8.4-1.5 1-1.9A6 6 0 0 0 12 3Z"/></svg></div>
+              <h3>Curiosity</h3>
+              <p>We keep learning, experiment with new technology and bring fresh ideas to every problem.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Journey timeline (sample milestones — replace with your own history) -->
+        <div class="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-2xl text-center">
+            <p class="eyebrow">Our journey</p>
+            <h3 class="sub-title">From a small team to a global partner</h3>
+          </div>
+          <ol class="timeline mt-12">
+            <li><span class="timeline-year">2018</span><h4>Founded</h4><p>NTALEC starts with a small team of engineers and one belief: software should be built right.</p></li>
+            <li><span class="timeline-year">2020</span><h4>Going mobile &amp; cloud</h4><p>Dedicated mobile and cloud/DevOps practices launch as clients scale their products.</p></li>
+            <li><span class="timeline-year">2022</span><h4>International growth</h4><p>Serving clients across multiple countries in fintech, healthcare, retail and logistics.</p></li>
+            <li><span class="timeline-year">2024</span><h4>AI &amp; data practice</h4><p>A specialist AI and data engineering team forms to deliver intelligent products.</p></li>
+            <li><span class="timeline-year">Today</span><h4>60+ people, 150+ projects</h4><p>A trusted long-term partner for startups and enterprises around the world.</p></li>
+          </ol>
+        </div>
+
+        <!-- Culture -->
+        <div class="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid items-center gap-10 lg:grid-cols-5">
+            <div class="lg:col-span-2">
+              <p class="eyebrow">Life at NTALEC</p>
+              <h3 class="sub-title">A culture built for great work</h3>
+              <p class="mt-4 text-slate-300">We hire curious people, give them ownership and support them to grow. The result is a team that cares deeply about the products it builds — and a place people love to work.</p>
+              <a href="#careers" class="btn-secondary mt-8">See open roles <span aria-hidden="true">→</span></a>
+            </div>
+            <ul class="grid gap-4 sm:grid-cols-2 lg:col-span-3">
+              <li class="model-card"><h4 class="!mt-0">Learning every day</h4><p>Annual learning budget, certifications, tech talks and hack days.</p></li>
+              <li class="model-card"><h4 class="!mt-0">Flexible &amp; remote-friendly</h4><p>Hybrid work and flexible hours that respect life outside work.</p></li>
+              <li class="model-card"><h4 class="!mt-0">Mentorship &amp; growth</h4><p>Clear career paths, regular feedback and senior mentors for everyone.</p></li>
+              <li class="model-card"><h4 class="!mt-0">Diverse &amp; inclusive</h4><p>Different backgrounds and perspectives make our products better.</p></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Security & quality commitments -->
+        <div class="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-2xl text-center">
+            <p class="eyebrow">Peace of mind</p>
+            <h3 class="sub-title">How we protect your business</h3>
+          </div>
+          <ul class="industry-grid mt-10">
+            <li>NDA &amp; full IP ownership</li>
+            <li>Secure development lifecycle</li>
+            <li>GDPR-ready data handling</li>
+            <li>Code reviews on every change</li>
+            <li>Automated testing &amp; CI/CD</li>
+            <li>Weekly progress reports</li>
+            <li>Complete documentation</li>
+            <li>Smooth handover &amp; support</li>
+          </ul>
+
+          <div class="cta-banner mt-16">
+            <div>
+              <h3 class="sub-title !mt-0">Let's build your next product together</h3>
+              <p class="mt-2 text-slate-300">Tell us where you want to go — we'll show you how to get there.</p>
+            </div>
+            <a href="#contact" class="btn-primary btn-lg">Start a conversation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         6. CAREERS — scroll scene
+         Card enlarges → video plays with the scroll → content scrolls up over the last frame.
+    ====================================================================== -->
+    <section id="careers" class="scene" aria-labelledby="careers-title" data-video="assets/video/Door_opening_into_executive_lounge_20260930114907.mp4">
+      <div class="scene-bg" aria-hidden="true">
+        <div class="scene-stage">
+          <canvas class="scene-canvas"></canvas>
+          <div class="scene-shade"></div>
+          <div class="scene-cover"></div>
+          <div class="chapter-card hero-tile">
+            <span class="hero-tile-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
+            <span class="hero-tile-title">Careers</span>
+            <span class="hero-tile-text">Join our team</span>
+            <span class="hero-tile-arrow">→</span>
+          </div>
+        </div>
+      </div>
+      <div class="scene-spacer" aria-hidden="true"></div>
+
+      <div class="scene-content relative mx-auto grid w-full max-w-7xl gap-10 px-4 pb-24 pt-24 sm:px-6 lg:grid-cols-5 lg:gap-14 lg:px-8">
+        <div class="lg:col-span-2">
+          <p class="eyebrow">Careers</p>
+          <h2 id="careers-title" class="section-title">Step inside. Build what's next with us.</h2>
+          <p class="mt-5 text-lg leading-relaxed text-slate-300">
+            We're a team of engineers, designers and problem-solvers who care about craft. Join us to work on meaningful products, learn from senior peers and grow faster than you thought possible.
+          </p>
+
+          <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+            <li class="perk"><span class="perk-dot"></span>Remote-friendly &amp; flexible hours</li>
+            <li class="perk"><span class="perk-dot"></span>Annual learning budget</li>
+            <li class="perk"><span class="perk-dot"></span>Health &amp; wellness cover</li>
+            <li class="perk"><span class="perk-dot"></span>Clear growth &amp; mentorship paths</li>
+            <li class="perk"><span class="perk-dot"></span>Modern stack, real ownership</li>
+            <li class="perk"><span class="perk-dot"></span>Team retreats &amp; hack days</li>
+          </ul>
+
+          <!-- TODO: replace with your careers inbox -->
+          <a href="mailto:careers@ntalec.com?subject=General%20application" class="btn-primary btn-lg mt-10">
+            Send us your CV
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <div class="lg:col-span-3">
+          <h3 class="font-display text-xl font-semibold text-white">Open positions</h3>
+          <ul class="mt-5 space-y-4">
+            <li class="job">
+              <div>
+                <h4>Senior Full-Stack Engineer</h4>
+                <p class="job-meta"><span>Engineering</span><span>Hybrid / Remote</span><span>Full-time</span></p>
+                <ul class="tag-list"><li>React</li><li>Node.js</li><li>PostgreSQL</li></ul>
+              </div>
+              <a href="mailto:careers@ntalec.com?subject=Application%3A%20Senior%20Full-Stack%20Engineer" class="job-apply">Apply <span aria-hidden="true">→</span></a>
+            </li>
+            <li class="job">
+              <div>
+                <h4>Mobile Developer</h4>
+                <p class="job-meta"><span>Engineering</span><span>Hybrid / Remote</span><span>Full-time</span></p>
+                <ul class="tag-list"><li>Flutter</li><li>iOS</li><li>Android</li></ul>
+              </div>
+              <a href="mailto:careers@ntalec.com?subject=Application%3A%20Mobile%20Developer" class="job-apply">Apply <span aria-hidden="true">→</span></a>
+            </li>
+            <li class="job">
+              <div>
+                <h4>DevOps / Cloud Engineer</h4>
+                <p class="job-meta"><span>Infrastructure</span><span>Remote</span><span>Full-time</span></p>
+                <ul class="tag-list"><li>AWS</li><li>Kubernetes</li><li>Terraform</li></ul>
+              </div>
+              <a href="mailto:careers@ntalec.com?subject=Application%3A%20DevOps%20%2F%20Cloud%20Engineer" class="job-apply">Apply <span aria-hidden="true">→</span></a>
+            </li>
+            <li class="job">
+              <div>
+                <h4>UI/UX Designer</h4>
+                <p class="job-meta"><span>Design</span><span>Hybrid</span><span>Full-time</span></p>
+                <ul class="tag-list"><li>Figma</li><li>Design Systems</li><li>Research</li></ul>
+              </div>
+              <a href="mailto:careers@ntalec.com?subject=Application%3A%20UI%2FUX%20Designer" class="job-apply">Apply <span aria-hidden="true">→</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trusted-by strip -->
+    <section aria-label="Trusted by" class="border-y border-white/5 bg-ink-900/60">
+      <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-12 gap-y-4 px-4 py-8 text-slate-500 sm:px-6 lg:px-8">
+        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Trusted by teams at</span>
+        <span class="logo-word">Northwind</span>
+        <span class="logo-word">Helix&nbsp;Health</span>
+        <span class="logo-word">Aurora&nbsp;Pay</span>
+        <span class="logo-word">Vertex&nbsp;Logistics</span>
+        <span class="logo-word">Lumen&nbsp;Retail</span>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         7. CONTACT
+    ====================================================================== -->
+    <section id="contact" class="py-24 sm:py-32">
+      <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-5 lg:px-8">
+        <div class="reveal lg:col-span-2">
+          <p class="eyebrow">Contact us</p>
+          <h2 class="section-title">Let's build something great together</h2>
+          <p class="mt-4 text-lg text-slate-400">Tell us about your project and we'll get back to you within one business day with next steps and a free estimate.</p>
+
+          <!-- TODO: replace placeholder contact details -->
+          <ul class="mt-10 space-y-6">
+            <li class="contact-item">
+              <span class="contact-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="m3 7 9 6 9-6"/></svg></span>
+              <div><p class="text-sm text-slate-400">Email</p><a href="mailto:hello@ntalec.com" class="font-medium text-white hover:text-brand-300">hello@ntalec.com</a></div>
+            </li>
+            <li class="contact-item">
+              <span class="contact-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
+              <div><p class="text-sm text-slate-400">Phone</p><a href="tel:+15551234567" class="font-medium text-white hover:text-brand-300">+1 (555) 123-4567</a></div>
+            </li>
+            <li class="contact-item">
+              <span class="contact-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+              <div><p class="text-sm text-slate-400">Office</p><p class="font-medium text-white">123 Innovation Drive, Tech City</p></div>
+            </li>
+          </ul>
+
+          <div class="mt-10 flex gap-3">
+            <a href="https://www.linkedin.com/company/ntalec" class="social" aria-label="NTALEC on LinkedIn" target="_blank" rel="noopener"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.3-.02-3-1.83-3-1.84 0-2.12 1.43-2.12 2.9V21H9z"/></svg></a>
+            <a href="https://twitter.com/ntalec" class="social" aria-label="NTALEC on X (Twitter)" target="_blank" rel="noopener"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.5 3h3.1l-6.8 7.8L21.8 21h-6.3l-4.9-6.4L5 21H1.9l7.3-8.3L1.5 3h6.4l4.4 5.8zm-1.1 16.2h1.7L6.9 4.7H5.1z"/></svg></a>
+            <a href="https://github.com/ntalec" class="social" aria-label="NTALEC on GitHub" target="_blank" rel="noopener"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg></a>
+            <a href="https://www.facebook.com/ntalec" class="social" aria-label="NTALEC on Facebook" target="_blank" rel="noopener"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8.5c0-.3.2-.5.5-.5Z"/></svg></a>
+          </div>
+        </div>
+
+        <!-- Contact form -->
+        <div class="reveal lg:col-span-3">
+          <!--
+            FORMSPREE: replace YOUR_FORM_ID in the action URL with the ID from your Formspree dashboard
+            (e.g. https://formspree.io/f/xyzabcde). With JavaScript the form submits via AJAX and shows an
+            inline message; without JavaScript it posts normally to Formspree.
+            Until the ID is set, the form falls back to opening the visitor's email client (data-mailto).
+          -->
+          <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-glow sm:p-10" novalidate data-mailto="hello@ntalec.com">
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div class="field">
+                <label for="name">Full name <span class="text-brand-400">*</span></label>
+                <input id="name" name="name" type="text" autocomplete="name" placeholder="Jane Doe" required minlength="2" maxlength="80" />
+                <p class="error" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="email">Work email <span class="text-brand-400">*</span></label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="jane@company.com" required maxlength="120" />
+                <p class="error" aria-live="polite"></p>
+              </div>
+              <div class="field sm:col-span-2">
+                <label for="subject">Subject <span class="text-brand-400">*</span></label>
+                <input id="subject" name="subject" type="text" placeholder="e.g. New mobile app for our customers" required minlength="3" maxlength="120" />
+                <p class="error" aria-live="polite"></p>
+              </div>
+              <div class="field sm:col-span-2">
+                <label for="message">Message <span class="text-brand-400">*</span></label>
+                <textarea id="message" name="message" rows="5" placeholder="Tell us about your goals, timeline and budget…" required minlength="20" maxlength="3000"></textarea>
+                <p class="error" aria-live="polite"></p>
+              </div>
+              <!-- Formspree honeypot (spam trap) — hidden from humans; Formspree drops submissions that fill it -->
+              <div class="hidden" aria-hidden="true">
+                <label for="_gotcha">Leave this empty</label>
+                <input id="_gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+            </div>
+
+            <div class="mt-8 flex flex-col-reverse items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p class="text-sm text-slate-500">We'll never share your details. Response within 24 hours.</p>
+              <button type="submit" class="btn-primary btn-lg w-full sm:w-auto">
+                <span class="btn-label">Send Message</span>
+                <svg class="spinner hidden h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-opacity=".25" stroke-width="3"/><path d="M22 12a10 10 0 0 0-10-10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+
+            <div id="form-status" class="mt-6 hidden rounded-xl px-4 py-3 text-sm" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       FOOTER
+  ====================================================================== -->
+  <footer class="border-t border-white/10 bg-ink-900">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
+        <div class="lg:col-span-2">
+          <a href="#home" class="flex items-center gap-2.5">
+            <img src="assets/img/logo.svg" alt="" width="36" height="36" class="h-9 w-9" />
+            <span class="font-display text-xl font-bold tracking-wide text-white">NTALEC</span>
+          </a>
+          <p class="mt-5 max-w-sm text-slate-400">Custom software, mobile, cloud and AI solutions that help ambitious businesses grow faster.</p>
+        </div>
+        <div>
+          <h3 class="footer-title">Company</h3>
+          <ul class="footer-list">
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#portfolio">Case Studies</a></li>
+            <li><a href="#careers">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title">Services</h3>
+          <ul class="footer-list">
+            <li><a href="#services">Custom Software</a></li>
+            <li><a href="#services">Mobile Apps</a></li>
+            <li><a href="#services">Cloud &amp; DevOps</a></li>
+            <li><a href="#services">UI/UX Design</a></li>
+            <li><a href="#services">AI &amp; ML</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title">Get in touch</h3>
+          <ul class="footer-list">
+            <li><a href="mailto:hello@ntalec.com">hello@ntalec.com</a></li>
+            <li><a href="tel:+15551234567">+1 (555) 123-4567</a></li>
+            <li>123 Innovation Drive, Tech City</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-slate-500 sm:flex-row">
+        <p>&copy; <span id="year">2026</span> NTALEC. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-white">Privacy Policy</a>
+          <a href="#" class="hover:text-white">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <a href="#home" id="to-top" class="fixed bottom-6 left-6 z-40 inline-flex h-11 w-11 translate-y-4 items-center justify-center rounded-full bg-brand-400 text-ink-950 opacity-0 shadow-glow transition-all duration-300 pointer-events-none" aria-label="Back to top">
+    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m18 15-6-6-6 6"/></svg>
+  </a>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
