@@ -14,6 +14,8 @@ import {
 import { COLLECTIONS, SETTINGS, ICONS, MESSAGE_STATUSES, APPLICATION_STATUSES, validate, EMAIL_RE } from './schema.js';
 import { parseMultipart, sniff } from './multipart.js';
 import { renderPage } from './render.js';
+import { mailConfig, mailConfigured } from './mailer.js';
+import { notifyNewMessage, notifyNewApplication, sendTestEmail, mailStatus, recipients } from './notify.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const PORT = Number(process.env.PORT) || 3000;
@@ -47,6 +49,12 @@ class HttpError extends Error {
 
 const clientIp = (req) => (TRUST_PROXY && String(req.headers['x-forwarded-for'] || '').split(',')[0].trim()) || req.socket.remoteAddress || '';
 const isSecure = (req) => PROD || req.socket.encrypted || (TRUST_PROXY && req.headers['x-forwarded-proto'] === 'https');
+// Public base URL for links in emails: SITE_URL if set, otherwise derived from the request
+const siteUrl = (req) => {
+  if (process.env.SITE_URL) return process.env.SITE_URL.replace(/\/+$/, '');
+  const host = String(req.headers.host || `localhost:${PORT}`).replace(/[^\w.:-]/g, '');
+  return `${isSecure(req) ? 'https' : 'http'}://${host}`;
+};
 
 function send(res, status, body, headers = {}) {
   res.writeHead(status, { 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin', ...headers });
@@ -140,6 +148,7 @@ async function handleContact(req, res) {
   db.prepare('INSERT INTO messages (name, email, subject, message, ip) VALUES (?, ?, ?, ?, ?)')
     .run(data.name, data.email, data.subject, data.message, clientIp(req));
   json(res, 201, { ok: true });
+  notifyNewMessage(data, siteUrl(req));
 }
 
 const CV_MAX = 5 * 1024 * 1024;
@@ -182,6 +191,7 @@ async function handleApply(req, res) {
     .run(job ? job.id : null, job ? job.title : 'General application', data.name, data.email, data.phone, data.linkedin,
       data.cover_letter, stored, cvName, clientIp(req));
   json(res, 201, { ok: true });
+  notifyNewApplication({ ...data, job_title: job ? job.title : 'General application' }, siteUrl(req));
 }
 
 function publicContent() {
@@ -366,6 +376,31 @@ async function handleAdmin(req, res, parts, url) {
       if (row.cv_file) { try { unlinkSync(path.join(CV_DIR, path.basename(row.cv_file))); } catch {} }
       return json(res, 200, { ok: true });
     }
+  }
+
+  // --- email notifications: status + test ---
+  if (resource === 'mail' && id === 'status' && method === 'GET') {
+    const c = mailConfig();
+    return json(res, 200, {
+      configured: mailConfigured(),
+      host: c.host, port: c.port, from: c.from, user: c.user ? c.user.replace(/^(.{2}).*(@.*)?$/, '$1…$2') : '',
+      recipients: recipients(),
+      ...mailStatus
+    });
+  }
+  if (resource === 'mail' && id === 'test' && method === 'POST') {
+    if (rateLimited(`mailtest:${user.id}`, 5, 10 * 60_000)) throw new HttpError(429, 'Too many test emails. Try again in a few minutes.');
+    const to = recipients();
+    if (!mailConfigured()) throw new HttpError(422, 'Email is not configured on the server yet (see README → Email notifications).');
+    if (!to.length) throw new HttpError(422, 'Add a notification address first.');
+    try {
+      await sendTestEmail(to, siteUrl(req));
+    } catch (err) {
+      mailStatus.lastErrorAt = new Date().toISOString();
+      mailStatus.lastError = err.message;
+      throw new HttpError(502, `Sending failed: ${err.message}`);
+    }
+    return json(res, 200, { ok: true, to });
   }
 
   // --- image upload (case study images) ---

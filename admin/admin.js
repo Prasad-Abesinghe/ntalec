@@ -589,10 +589,14 @@ function fieldHtml(f, value, idPrefix = 'f') {
           <label class="btn btn-ghost btn-sm cursor-pointer">Upload image<input type="file" accept="image/png,image/jpeg,image/webp" class="sr-only" data-upload="${id}" /></label>
           <button type="button" class="btn btn-ghost btn-sm ${value ? '' : 'hidden'}" data-clear-image="${id}">Remove</button>
         </div>`; break;
+    case 'toggle':
+      return `<div class="field sm:col-span-2" data-field="${f.name}">
+        <label class="flex cursor-pointer items-center gap-3 text-sm text-slate-200"><input type="checkbox" id="${id}" name="${f.name}" class="h-4 w-4 accent-cyan-400" ${value === '1' ? 'checked' : ''} />${esc(f.label)}</label>${help}<p class="field-error hidden"></p></div>`;
     default:
-      control = `<input ${common} type="${f.type === 'email' ? 'email' : f.type === 'url' ? 'text' : 'text'}" class="input" value="${esc(value)}" />`;
+      control = `<input ${common} type="${f.type === 'email' ? 'email' : 'text'}" class="input" value="${esc(value)}" />`;
   }
-  return `<div class="field" data-field="${f.name}"><label class="label" for="${id}">${esc(f.label)}${req}</label>${control}${help}<p class="field-error hidden"></p></div>`;
+  const wide = f.type === 'emails' ? ' sm:col-span-2' : '';
+  return `<div class="field${wide}" data-field="${f.name}"><label class="label" for="${id}">${esc(f.label)}${req}</label>${control}${help}<p class="field-error hidden"></p></div>`;
 }
 
 function wireFieldControls(root) {
@@ -697,18 +701,53 @@ async function viewSettings(view) {
       ${Object.entries(groups).map(([g, fields]) => `
         <section class="card p-6">
           <h2 class="font-semibold text-white">${esc(g)}</h2>
+          ${g === 'Email notifications' ? '<div id="mail-status" class="mt-3"></div>' : ''}
           <div class="mt-5 grid gap-5 ${g === 'SEO' ? '' : 'sm:grid-cols-2'}">${fields.map((f) => fieldHtml(f, settings[f.name], 's')).join('')}</div>
+          ${g === 'Email notifications' ? '<div class="mt-5 flex flex-wrap items-center gap-3 border-t divider pt-5"><button type="button" id="mail-test" class="btn btn-ghost btn-sm">Send test email</button><p class="help !mt-0">Save your changes first — the test goes to the saved addresses.</p></div>' : ''}
         </section>`).join('')}
       <div class="flex justify-end"><button type="submit" class="btn btn-primary">Save settings</button></div>
     </form>`;
   const form = $('#settings-form');
+
+  const renderMailStatus = async () => {
+    const box = $('#mail-status');
+    if (!box) return;
+    try {
+      const st = await api('mail/status');
+      const when = (iso) => new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+      box.innerHTML = st.configured
+        ? `<div class="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200">
+             Sending via <strong>${esc(st.host)}:${st.port}</strong> as <strong>${esc(st.from)}</strong> → ${st.recipients.length ? esc(st.recipients.join(', ')) : '<em>no recipients</em>'}
+             ${st.lastSuccessAt ? `<br><span class="text-emerald-300/80">Last email sent ${when(st.lastSuccessAt)}.</span>` : ''}
+           </div>
+           ${st.lastError && (!st.lastSuccessAt || st.lastErrorAt > st.lastSuccessAt) ? `<div class="mt-2 rounded-lg border border-red-400/30 bg-red-400/10 px-4 py-3 text-sm text-red-200">Last attempt failed (${when(st.lastErrorAt)}): ${esc(st.lastError)}</div>` : ''}`
+        : `<div class="rounded-lg border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
+             Email isn't set up on the server yet, so no notifications are sent. Set <code>SMTP_HOST</code>, <code>SMTP_PORT</code>, <code>SMTP_USER</code>, <code>SMTP_PASS</code> and <code>SMTP_FROM</code> and restart — see the README section "Email notifications".
+           </div>`;
+    } catch {}
+  };
+  renderMailStatus();
+  $('#mail-test')?.addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try {
+      const { to } = await api('mail/test', { method: 'POST' });
+      toast(`Test email sent to ${to.join(', ')}.`);
+    } catch (err) { if (err.status !== 401) toast(err.message, 'error'); }
+    btn.disabled = false;
+    btn.textContent = 'Send test email';
+    renderMailStatus();
+  });
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const values = Object.fromEntries(state.schema.settings.map((f) => [f.name, form.elements[f.name].value]));
+    const values = Object.fromEntries(state.schema.settings.map((f) => [f.name, f.type === 'toggle' ? (form.elements[f.name].checked ? '1' : '') : form.elements[f.name].value]));
     try {
       await api('settings', { method: 'PUT', body: values });
       showFieldErrors(form, {});
       toast('Settings saved. The website is updated.');
+      renderMailStatus();
     } catch (err) {
       if (err.status === 401) return;
       showFieldErrors(form, err.fields || {});

@@ -22,6 +22,8 @@ server/auth.js          Password hashing (scrypt), sessions, rate limiting
 server/multipart.js     File-upload parsing + file-type detection
 server/seed.js          Initial content (mirrors the original static page)
 server/create-admin.js  CLI to create admin users
+server/mailer.js        Built-in SMTP client (STARTTLS/TLS, AUTH PLAIN/LOGIN)
+server/notify.js        Notification emails for new messages and applications
 
 admin/                  Admin portal (single-page app): index.html, admin.js, admin.css
 data/                   Created at runtime: ntalec.db, uploads/ (public images), cvs/ (private CVs) — not in git
@@ -46,6 +48,7 @@ content written in `index.html` and the contact/application forms cannot submit.
 
 | Area | What admins can do |
 |---|---|
+| Email notifications | New messages / applications emailed to chosen addresses (see below) |
 | Dashboard | New messages / applications, open jobs, recent activity |
 | Messages | Contact-form inbox: search, filter (new / read / replied / archived), reply by email, archive, delete |
 | Applications | Job applications with CV download, status pipeline (new → reviewing → shortlisted → interview → hired / rejected), internal notes |
@@ -66,6 +69,38 @@ cookies; admin changes also require an `X-Requested-With` header (CSRF protectio
 application endpoints are rate-limited; uploads are checked by file contents (CVs: PDF/DOC/DOCX ≤ 5 MB,
 images: PNG/JPG/WebP ≤ 3 MB — no SVG); CVs are stored outside the public folder and only admins can download
 them; all content is HTML-escaped when rendered; only whitelisted paths are served.
+
+## Email notifications
+
+The server can email you when a contact message or job application arrives (sent in the background — a mail
+problem never affects the visitor, and everything is still saved in the admin portal).
+
+**1. Give the server an outgoing mail account** with these environment variables, then restart:
+
+| Variable | Example |
+|---|---|
+| `SMTP_HOST` | `smtp.gmail.com` · `smtp.office365.com` · `smtp.zoho.com` · `smtp-relay.brevo.com` |
+| `SMTP_PORT` | `587` (STARTTLS, default) or `465` (TLS) |
+| `SMTP_USER` | the mailbox login, usually the full address |
+| `SMTP_PASS` | its password — for Gmail / Google Workspace use an **app password** (Google Account → Security → App passwords; requires 2-step verification) |
+| `SMTP_FROM` | `NTALEC Website <no-reply@ntalec.com>` (must be an address the account may send from) |
+| `SITE_URL` | `https://www.ntalec.com` — used for the "Open inbox" links in emails |
+
+The connection is always encrypted (STARTTLS or TLS) and the password is never stored in the database or shown
+in the admin portal.
+
+**2. In Admin → Site settings → Email notifications** choose who receives them (one or more addresses; empty =
+the contact email), switch message / application emails on or off, save, and click **Send test email**. The
+panel shows which server is used and the last delivery result or error.
+
+Message emails have **Reply-To set to the visitor**, so you can answer by simply replying. Application emails
+link to the application; CVs stay in the admin portal (they are not attached to emails).
+
+On Windows (PowerShell) for local testing:
+
+```
+$env:SMTP_HOST="smtp.gmail.com"; $env:SMTP_PORT="465"; $env:SMTP_USER="you@gmail.com"; $env:SMTP_PASS="your-app-password"; $env:SMTP_FROM="NTALEC Website <you@gmail.com>"; npm start
+```
 
 ## Deploying
 

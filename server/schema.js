@@ -117,7 +117,10 @@ export const SETTINGS = [
   { name: 'seo_title', label: 'Page title', type: 'text', max: 70, group: 'SEO', help: 'Shown in browser tabs and search results (≤ 60 characters is ideal).' },
   { name: 'seo_description', label: 'Meta description', type: 'textarea', max: 170, group: 'SEO', help: 'Search result snippet (≤ 160 characters is ideal).' },
   { name: 'social_title', label: 'Social share title', type: 'text', max: 90, group: 'SEO' },
-  { name: 'social_description', label: 'Social share description', type: 'text', max: 200, group: 'SEO' }
+  { name: 'social_description', label: 'Social share description', type: 'text', max: 200, group: 'SEO' },
+  { name: 'notify_email', label: 'Send notifications to', type: 'emails', max: 300, group: 'Email notifications', placeholder: 'you@company.com, hr@company.com', help: 'One or more addresses, separated by commas. Leave empty to use the contact email.' },
+  { name: 'notify_messages', label: 'Email me when a contact message arrives', type: 'toggle', group: 'Email notifications' },
+  { name: 'notify_applications', label: 'Email me when a job application arrives', type: 'toggle', group: 'Email notifications' }
 ];
 
 export const MESSAGE_STATUSES = ['new', 'read', 'replied', 'archived'];
@@ -146,6 +149,13 @@ export function validate(fields, input = {}) {
     if (f.required && !v) { errors[f.name] = 'Required.'; continue; }
     if (f.max && v.length > f.max) errors[f.name] = `Must be ${f.max} characters or fewer.`;
     if (v && f.type === 'email' && !EMAIL_RE.test(v)) errors[f.name] = 'Enter a valid email address.';
+    if (v && f.type === 'emails') {
+      const list = v.split(',').map((x) => x.trim()).filter(Boolean);
+      if (list.length > 5) errors[f.name] = 'Up to 5 addresses.';
+      else if (!list.every((x) => EMAIL_RE.test(x))) errors[f.name] = 'Enter valid email addresses separated by commas.';
+      else v = list.join(', ');
+    }
+    if (f.type === 'toggle') v = v === '1' || v === 'true' ? '1' : '';
     if (v && f.type === 'url' && !SAFE_URL_RE.test(v)) errors[f.name] = 'Use a full https:// URL, a /path or a #section link.';
     if (v && f.type === 'image' && !/^\/uploads\/[\w.-]+$/.test(v)) errors[f.name] = 'Upload an image.';
     if (v && f.type === 'select' && !f.options.includes(v)) errors[f.name] = 'Choose one of the options.';

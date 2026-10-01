@@ -55,5 +55,8 @@ export const SEED_SETTINGS = {
   seo_title: 'NTALEC | Custom Software Development, Cloud & AI Solutions',
   seo_description: 'NTALEC builds custom software, mobile apps, cloud platforms and AI solutions that help businesses scale. Agile delivery, expert engineers and 24/7 support.',
   social_title: 'NTALEC | Software That Moves Your Business Forward',
-  social_description: 'Custom software, mobile, cloud and AI solutions engineered for growth.'
+  social_description: 'Custom software, mobile, cloud and AI solutions engineered for growth.',
+  notify_email: '',
+  notify_messages: '1',
+  notify_applications: '1'
 };
